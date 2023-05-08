@@ -1,4 +1,4 @@
-# Token Action HUD Pathfinder 2
+# Token Action HUD Starfinder
 
 Token Action HUD is a repositionable HUD of actions for a selected token.
 
@@ -16,18 +16,18 @@ Token Action HUD is a repositionable HUD of actions for a selected token.
 ## Method 1
 1. On Foundry VTT's **Configuration and Setup** screen, go to **Add-on Modules**
 2. Click **Install Module**
-3. Search for **Token Action HUD Pathfinder 2** 
+3. Search for **Token Action HUD Starfinder** 
 4. Click **Install** next to the module listing
 
 ## Method 2
 1. On Foundry VTT's **Configuration and Setup** screen, go to **Add-on Modules**
 2. Click **Install Module**
-3. In the Manifest URL field, paste: `https://github.com/Larkinabout/fvtt-token-action-hud-pf2e/releases/latest/download/module.json`
+3. In the Manifest URL field, paste: `https://github.com/ian612/fvtt-token-action-hud-sfrpg/releases/latest/download/module.json`
 4. Click **Install** next to the pasted Manifest URL
 
 ## Required Modules
 
-**IMPORTANT** - Token Action HUD Pathfinder 2 requires the [Token Action HUD Core](https://foundryvtt.com/packages/token-action-hud-core) module to be installed.
+**IMPORTANT** - Token Action HUD Starfinder requires the [Token Action HUD Core](https://foundryvtt.com/packages/token-action-hud-core) module to be installed.
 
 ## Recommended Modules
 Token Action HUD uses either the [Color Picker](https://foundryvtt.com/packages/color-picker), [libThemer](https://foundryvtt.com/packages/lib-themer) or [VTTColorSettings](https://foundryvtt.com/packages/colorsettings) library modules for its color picker settings. Only one is required.
