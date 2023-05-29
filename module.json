@@ -1,101 +1,45 @@
 {
-  "id": "token-action-hud-pf2e",
-  "title": "Token Action HUD Pathfinder 2e",
+  "id": "token-action-hud-sfrpg",
+  "title": "Token Action HUD Starfinder",
   "description": "Token Action HUD is a repositionable HUD of actions for a selected token",
   "authors": [
     {
-      "name": "Larkinabout",
-      "url": "https://github.com/Larkinabout"
-    },
-    {
-      "name": "Drental"
-    },
-    {
-      "name": "^ and stick"
+      "name": "Ian Bennett",
+      "url": "https://github.com/ian612"
     }
   ],
-  "url": "This is auto replaced",
+  "url": "https://github.com/ian612/fvtt-token-action-hud-sfrpg",
   "flags": {},
-  "version": "This is auto replaced",
+  "version": "0.1",
   "compatibility": {
     "minimum": "10",
     "verified": "10.291"
   },
   "esmodules": [
-    "./scripts/token-action-hud-pf2e.min.js"
+    "./scripts/token-action-hud-sfrpg.min.js"
   ],
   "scripts": [
   ],
   "styles": [
-    "./styles/tah-pf2e.css"
+    "./styles/tah-sfrpg.css"
   ],
   "languages": [
     {
       "lang": "en",
       "name": "English",
       "path": "languages/en.json"
-    },
-    {
-      "lang": "ko",
-      "name": "Korean",
-      "path": "languages/ko.json"
-    },
-    {
-      "lang": "pt-BR",
-      "name": "Português (Brasil)",
-      "path": "languages/br.json"
-    },
-    {
-      "lang": "es",
-      "name": "Spanish",
-      "path": "languages/es.json"
-    },
-    {
-      "lang": "fr",
-      "name": "French",
-      "path": "languages/fr.json"
-    },
-    {
-      "lang": "pl",
-      "name": "Polish",
-      "path": "languages/pl.json"
-    },
-    {
-      "lang": "ja",
-      "name": "日本語",
-      "path": "languages/ja.json"
-    },
-    {
-      "lang": "cn",
-      "name": "中文",
-      "path": "languages/cn.json"
-    },
-    {
-      "lang": "it",
-      "name": "italiano",
-      "path": "languages/it.json"
-    },
-    {
-      "lang": "de",
-      "name": "Deutsch",
-      "path": "languages/de.json"
-    },
-    {
-      "lang": "zh-tw",
-      "name": "正體中文",
-      "path": "languages/zh-tw.json"
     }
   ],
   "packs": [],
   "relationships": {
     "systems": [
       {
-        "id": "pf2e",
+        "id": "sfrpg",
         "type": "system",
         "compatibility": [
           {
-            "minimum": "4.6.4",
-            "verified": "4.11.1"
+            "minimum": "0.23.0",
+            "verified": "0.24.0"
           }
         ]
       }
@@ -108,7 +52,7 @@
           {
             "minimum": "1.4.0",
             "maximum": "1.4",
-            "verified": "1.4.0"
+            "verified": "1.4.6"
           }
         ]
       }
@@ -119,9 +63,9 @@
     }
   },
   "socket": false,
-  "manifest": "This is auto replaced",
-  "download": "This is auto replaced",
-  "readme": "https://github.com/Larkinabout/fvtt-token-action-hud-pf2e#readme",
+  "manifest": "https://raw.githubusercontent.com/ian612/fvtt-token-action-hud-sfrpg/main/module.json",
+  "download": "",
+  "readme": "https://github.com/ian612/fvtt-token-action-hud-sfrpg#readme",
   "protected": false,
   "coreTranslation": false,
   "library": false
