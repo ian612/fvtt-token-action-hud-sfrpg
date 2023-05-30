@@ -16,18 +16,18 @@
     "verified": "10.291"
   },
   "esmodules": [
-    "./scripts/token-action-hud-sfrpg.min.js"
+    "./token-action-hud-sfrpg.js"
   ],
   "scripts": [
   ],
   "styles": [
-    "./styles/tah-sfrpg.css"
+    "./token-action-hud-sfrpg.css"
   ],
   "languages": [
     {
       "lang": "en",
       "name": "English",
-      "path": "languages/en.json"
+      "path": "lang/en.json"
     }
   ],
   "packs": [],
