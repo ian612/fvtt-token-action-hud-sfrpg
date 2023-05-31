@@ -43,7 +43,16 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             this.actorType = this.actor?.type
 
             // Exit if actor is not required type
-            const knownActors = ['character', 'npc', 'familiar']
+            const knownActors = [
+                "character",
+                "drone",
+                "hazard",
+                "npc2",
+                "starship",
+                "vehicle",
+                "npc"
+            ]
+
             if (this.actorType && !knownActors.includes(this.actorType)) return
 
             // Set items variable
@@ -63,9 +72,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
             if (this.actorType === 'character') {
                 await this._buildCharacterActions()
-            }
-            if (this.actorType === 'familiar') {
-                await this._buildFamiliarActions()
             }
             if (this.actorType === 'npc') {
                 await this._buildNpcActions()
