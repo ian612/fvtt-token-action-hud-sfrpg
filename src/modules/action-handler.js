@@ -15,29 +15,12 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         // Initialize items variable
         items = null
 
-        // Initialize setting variables
-        abbreviateSkills = null
-        calculateAttackPenalty = null
-        colorSkills = null
-
-        // Initialize groupIds variables
-        groupIds = null
-        activationGroupIds = null
-        effectGroupIds = null
-        inventoryGroupIds = null
-        spellGroupIds = null
-
-        // Initialize action variables
-        featureActions = null
-        inventoryActions = null
-        spellActions = null
-
         /**
          * Build System Actions
          * @override
          * @param {array} groupIds
          */
-        async buildSystemActions (groupIds) {
+        async buildSystemActions(groupIds) {
         // Set actor and token variables
             this.actors = (!this.actor) ? this._getActors() : [this.actor]
             this.actorType = this.actor?.type
@@ -62,22 +45,33 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 this.items = items
             }
 
-            // Set settings variables
-            this.abbreviateSkills = Utils.getSetting('abbreviateSkills')
-            this.calculateAttackPenalty = Utils.getSetting('calculateAttackPenalty')
-            this.colorSkills = Utils.getSetting('colorSkills')
-
             // Set group variables
             this.groupIds = groupIds
 
             if (this.actorType === 'character') {
-                await this._buildCharacterActions()
+                await this._buildCharacterActions();
+            }
+            if (this.actorType === 'drone') {
+                await this._buildDroneActions();
+            }
+            if (this.actorType === 'hazard') {
+                await this._buildHazardActions();
+            }
+            if (this.actorType === 'npc2') {
+                await this._buildNpc2Actions();
+            }
+            if (this.actorType === 'starship') {
+                await this._buildStarshipActions();
+            }
+            if (this.actorType === 'vehicle') {
+                await this._buildVehicleActions();
             }
             if (this.actorType === 'npc') {
-                await this._buildNpcActions()
+                await this._buildNpcActions();
             }
+
             if (!this.actor) {
-                this._buildMultipleTokenActions()
+                this._buildMultipleTokenActions();
             }
         }
 
@@ -85,56 +79,56 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * Build character actions
          * @private
          */
-        async _buildCharacterActions () {
-            this._buildActions()
-            this._buildCombat()
-            await this._buildConditions()
-            this._buildEffects()
-            this._buildFeats()
-            this._buildHeroPoints()
-            this._buildInitiative()
-            this._buildInventory()
-            this._buildPerceptionCheck()
-            this._buildRecoveryCheck()
-            this._buildRests()
-            this._buildSaves()
-            this._buildSkills()
-            await this._buildSpells()
-            this._buildStrikes()
-            this._buildToggles()
+        async _buildCharacterActions() {
+            this._buildEquipmentCategory();
         }
 
         /**
-         * Build familiar actions
+         * Build character actions
          * @private
          */
-        async _buildFamiliarActions () {
-            this._buildAttack()
-            this._buildCombat()
-            await this._buildConditions()
-            this._buildEffects()
-            this._buildInventory()
-            this._buildPerceptionCheck()
-            this._buildSaves()
-            this._buildSkills()
+        async _buildDroneActions() {
+            
         }
 
         /**
-         * Build NPC actions
+         * Build character actions
+         * @private
          */
-        async _buildNpcActions () {
-            this._buildActions()
-            this._buildCombat()
-            await this._buildConditions()
-            this._buildEffects()
-            this._buildFeats()
-            this._buildInitiative()
-            this._buildInventory()
-            this._buildPerceptionCheck()
-            this._buildSaves()
-            this._buildSkills()
-            this._buildStrikes()
-            await this._buildSpells()
+        async _buildHazardActions() {
+            
+        }
+
+        /**
+         * Build character actions
+         * @private
+         */
+        async _buildNpc2Actions() {
+            
+        }
+
+        /**
+         * Build character actions
+         * @private
+         */
+        async _buildStarshipActions() {
+            
+        }
+
+        /**
+         * Build character actions
+         * @private
+         */
+        async _buildVehicleActions() {
+            
+        }
+
+        /**
+         * Build character actions
+         * @private
+         */
+        async _buildNpcActions() {
+            
         }
 
         /**
@@ -142,11 +136,68 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @private
          * @returns {object}
          */
-        _buildMultipleTokenActions () {
+        _buildMultipleTokenActions() {
             this._buildInitiative()
             this._buildPerceptionCheck()
             this._buildSaves()
             this._buildSkills()
+        }
+
+        /**
+         * Build equipment with actions
+         */
+        _buildEquipmentCategory() {
+            const actionType = 'equipment';
+
+            // Exit early if no items exist
+            if (this.items.size === 0) return;
+
+            // item types that we want to add to the list of actions
+            const equipmentTypes = ['weapon', 'consumable'];
+
+            // filter the items to get only those in itemTypes
+            const equipmentItems = new Map([...this.items].filter(item => equipmentTypes.includes(item[1].type)));
+
+            // Create the Map for the equipment
+            const equipmentMap = new Map();
+
+            // Build a sub-map for each type of equipment
+            for (const [key, value] of equipmentItems) {
+
+                const equipmentType = value.type
+
+                switch (equipmentType) {
+                    case 'weapon':
+                        if (!equipmentMap.has('weapons')) {
+                            equipmentMap.set('weapons', new Map())
+                        }
+                        equipmentMap.get('weapons').set(key, value)
+                        break;
+                    case 'consumable':
+                        if (!equipmentMap.has('consumables')) {
+                            equipmentMap.set('consumables', new Map())
+                        }
+                        equipmentMap.get('consumables').set(key, value)
+                        break;
+                }
+            }
+
+            console.log(equipmentMap);
+
+            // Loop through inventory subcateogry ids
+            for (const [key, value] of equipmentMap) {
+                const groupId = key
+                const equipment = value
+
+                // Create group data
+                const groupData = { id: groupId, type: 'system' }
+
+                // Build actions
+                this._addActions(equipment, groupData, actionType)
+            }
+
+            console.log(this);
+
         }
 
         /**
@@ -199,6 +250,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 // Build actions
                 this._addActions(actions, groupData, actionType)
             }
+            console.log(this);
         }
 
         /**
@@ -1057,44 +1109,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             }
         }
 
-        /** @private */
-        /*
-    _addContainerSublayout (tokenId, actionType, category, actor, items) {
-        const allContainerIds = [
-            ...new Set(
-                actor.items
-                    .filter((i) => i.system.containerId?.value)
-                    .map((i) => i.system.containerId.value)
-            )
-        ]
-        const containers = (items ?? []).filter((i) =>
-            allContainerIds.includes(i.id)
-        )
-
-        containers.forEach((container) => {
-            const containerId = container.id
-            const contents = actor.items
-                .filter((i) => i.system.containerId?.value === containerId)
-                .sort(this.foundrySort)
-            if (contents.length === 0) return
-
-            const containerCategory = this.initializeEmptyGroup(containerId)
-            const containerActions = this._buildItemActions(
-                tokenId,
-                actionType,
-                contents
-            )
-            containerCategory.actions = containerActions
-            containerCategory.info1 = container.system.bulkCapacity.value
-
-            this._combineGroupWithCategory(
-                category,
-                container.name,
-                containerCategory
-            )
-        })
-    } */
-
         /**
          * Build actions
          * @private
@@ -1103,7 +1117,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {string} actionType
          */
         async _addActions (items, groupData, actionType = 'item', spellLevel = null) {
-        // Exit if there are no items
+            // Exit if there are no items
             if (items.size === 0) return
 
             // Exit if there is no groupId
@@ -1244,7 +1258,15 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @returns {object}
          */
         _getActors () {
-            const allowedTypes = ['character', 'npc']
+            const allowedTypes = [
+                "character",
+                "drone",
+                "hazard",
+                "npc2",
+                "starship",
+                "vehicle",
+                "npc"
+            ]
             const actors = canvas.tokens.controlled.map(token => token.actor)
             if (actors.every(actor => allowedTypes.includes(actor.type))) { return actors }
         }

@@ -21,7 +21,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
         /** @override */
         getAvailableRollHandlers () {
-            const coreTitle = 'Core PF2E'
+            const coreTitle = 'Core SFRPG'
 
             const choices = { core: coreTitle }
 
