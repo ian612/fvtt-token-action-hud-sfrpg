@@ -6,7 +6,7 @@ export let ActionHandler = null
 
 Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
     ActionHandler = class ActionHandler extends coreModule.api.ActionHandler {
-    // Initialize actor and token variables
+        // Initialize actor and token variables
         actors = null
         actorId = null
         actorType = null
@@ -137,7 +137,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @returns {object}
          */
         _buildMultipleTokenActions() {
-            
+
         }
 
         /**
@@ -179,11 +179,13 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 }
             }
 
-            console.log(equipmentMap);
-
             // Loop through inventory subcateogry ids
             for (const [key, value] of equipmentMap) {
+
+                // get the category
                 const groupId = key
+                
+                // list of stuff in the category
                 const equipment = value
 
                 // Create group data
@@ -305,6 +307,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {string} actionType
          */
         async _addActions (items, groupData, actionType = 'item', spellLevel = null) {
+            console.log(items, groupData, actionType, spellLevel)
             // Exit if there are no items
             if (items.size === 0) return
 
@@ -314,6 +317,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
             // Get actions
             const actions = [...items].map(item => this._getAction(actionType, item[1], spellLevel))
+            console.log(actions);
 
             // Add actions to action list
             await this.addActions(actions, groupData)
@@ -321,13 +325,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
         /**
          * Get Action
+         * 
+         * This takes the items that have been identified as needing to be added to the token action HUD and
+         * returns the appropriate values for the token action hud core module to process them
          * @private
          * @param {string} actionType
          * @param {object} entity
          * @returns {object}
          */
         _getAction (actionType, entity, spellLevel) {
+            console.log(actionType, entity, spellLevel)
+            
+            // get the id from id or _id, include the spell level if it's a spell
             const id = (actionType === 'spell') ? `${entity.id ?? entity._id}-${spellLevel}` : entity.id ?? entity._id
+            
+            // get the entity's name
             const name = entity?.name ?? entity?.label
             const actionTypeName = `${coreModule.api.Utils.i18n(ACTION_TYPE[actionType])}: ` ?? ''
             const listName = entity.listName ?? `${actionTypeName}${name}`
@@ -353,6 +365,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const info2 = info?.info2
             const info3 = info?.info3
             const systemSelected = entity?.systemSelected ?? null
+
+            console.log([id, name, encodedValue, cssClass, img, icon1, info1, info2, info3, listName, systemSelected])
             return {
                 id,
                 name,

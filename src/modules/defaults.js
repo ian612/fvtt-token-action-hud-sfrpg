@@ -20,8 +20,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 id: 'equipment',
                 name: 'Equipment', // coreModule.api.Utils.i18n('PF2E.TabInventoryLabel'),
                 groups: [
-                    { ...groups.weapons, nestId: 'inventory_weapons' },
-                    { ...groups.consumables, nestId: 'inventory_consumables' }
+                    { ...groups.weapons, nestId: 'equipment_weapons' },
+                    { ...groups.consumables, nestId: 'equipment_consumables' }
                 ]
             },
             {
@@ -29,10 +29,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 id: 'utility',
                 name: coreModule.api.Utils.i18n('tokenActionHud.utility'),
                 groups: [
-                    { ...groups.combat, nestId: 'utility_combat' },
-                    { ...groups.token, nestId: 'utility_token' },
-                    { ...groups.rests, nestId: 'utility_rests' },
-                    { ...groups.utility, nestId: 'utility_utility' }
+                    { ...groups.token, nestId: 'utility_token' }
                 ]
             }
         ],
