@@ -20,11 +20,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const actionType = payload[0]
             const actionId = payload[1]
 
-            const renderable = ['item', 'feat', 'action', 'lore', 'ammo']
+            const renderable = ['equipment', 'feat', 'action', 'lore', 'ammo']
             if (renderable.includes(actionType) && this.isRenderItem()) {
                 return this.doRenderItem(this.actor, actionId)
             }
-            const knownCharacters = ['character', 'familiar', 'npc']
+
+            const knownCharacters = [
+                "character",
+                "drone",
+                "hazard",
+                "npc2",
+                "starship",
+                "vehicle",
+                "npc"
+            ]
+            
             if (!this.actor) {
                 const controlledTokens = canvas.tokens.controlled.filter((token) =>
                     knownCharacters.includes(token.actor?.type)
@@ -36,6 +46,18 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             } else {
                 await this._handleMacros(event, actionType, this.actor, this.token, actionId)
             }
+        }
+
+    /**
+    * Roll Equipment
+    * @private
+    * @param {object} actor    The actor
+    * @param {string} actionId The action id
+    */
+        _rollEquipment (actor, actionId) {
+            const equipment = actor.items.get(actionId)
+
+            equipment.toChat()
         }
 
         /**
@@ -91,6 +113,9 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 break
             case 'action':
             case 'feat':
+            case 'equipment':
+                this._rollEquipment(actor, actionId)
+                break
             case 'item':
                 this._rollItem(actor, actionId)
                 break
