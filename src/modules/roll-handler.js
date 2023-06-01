@@ -56,8 +56,9 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
     */
         _rollEquipment (actor, actionId) {
             const equipment = actor.items.get(actionId)
+            console.log(equipment);
 
-            equipment.toChat()
+            equipment.roll()
         }
 
         /**

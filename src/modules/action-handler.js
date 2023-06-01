@@ -184,7 +184,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
                 // get the category
                 const groupId = key
-                
+
                 // list of stuff in the category
                 const equipment = value
 
@@ -195,7 +195,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 this._addActions(equipment, groupData, actionType)
             }
 
-            console.log(this);
+            // console.log(this);
 
         }
 
@@ -307,7 +307,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {string} actionType
          */
         async _addActions (items, groupData, actionType = 'item', spellLevel = null) {
-            console.log(items, groupData, actionType, spellLevel)
+            // console.log(items, groupData, actionType, spellLevel)
             // Exit if there are no items
             if (items.size === 0) return
 
@@ -334,7 +334,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @returns {object}
          */
         _getAction (actionType, entity, spellLevel) {
-            console.log(actionType, entity, spellLevel)
+            // console.log(actionType, entity, spellLevel)
             
             // get the id from id or _id, include the spell level if it's a spell
             const id = (actionType === 'spell') ? `${entity.id ?? entity._id}-${spellLevel}` : entity.id ?? entity._id
@@ -366,7 +366,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const info3 = info?.info3
             const systemSelected = entity?.systemSelected ?? null
 
-            console.log([id, name, encodedValue, cssClass, img, icon1, info1, info2, info3, listName, systemSelected])
+            // console.log([id, name, encodedValue, cssClass, img, icon1, info1, info2, info3, listName, systemSelected])
             return {
                 id,
                 name,
