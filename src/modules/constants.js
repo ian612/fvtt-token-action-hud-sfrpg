@@ -60,21 +60,25 @@ export const ACTION_TYPE = {
  */
 export const SKILL_ABBREVIATION = {
     acrobatics: 'acr',
-    arcana: 'arc',
     athletics: 'ath',
-    crafting: 'cra',
-    deception: 'dec',
+    bluff: 'blu',
+    computers: 'com',
+    culture: 'cul',
     diplomacy: 'dip',
+    disguide: 'dis',
+    engineering: 'eng',
     intimidation: 'itm',
+    lifeScience: 'lsc',
     medicine: 'med',
-    nature: 'nat',
-    occultism: 'occ',
-    performance: 'prf',
-    religion: 'rel',
-    society: 'soc',
+    mysticism: 'mys',
+    perception: 'per',
+    physicalScience: 'phs',
+    piloting: 'pil',
+    profession: 'pro',
+    senseMotive: 'sen',
+    sleightOfHand: 'sle',
     stealth: 'ste',
-    survival: 'sur',
-    thievery: 'thi'
+    survival: 'sur'
 }
 
 // All the potential types of actions go here

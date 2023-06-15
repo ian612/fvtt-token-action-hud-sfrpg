@@ -26,6 +26,15 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 ]
             },
             {
+                nestId: 'skill',
+                id: 'skill',
+                name: 'Skills', // coreModule.api.Utils.i18n('PF2E.TabInventoryLabel'),
+                groups: [
+                    { ...groups.trained, nestId: 'skill_trained' },
+                    { ...groups.untrained, nestId: 'skill_untrained' }
+                ]
+            },
+            {
                 nestId: 'utility',
                 id: 'utility',
                 name: coreModule.api.Utils.i18n('tokenActionHud.utility'),

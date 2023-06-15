@@ -1,5 +1,5 @@
 // System Module Imports
-import { ACTION_ICON, ACTION_TYPE, SKILL_ABBREVIATION, STRIKE_ICON, STRIKE_USAGE } from './constants.js'
+import { ACTION_ICON, ACTION_TYPE } from './constants.js'
 import { Utils } from './utils.js'
 
 export let ActionHandler = null
@@ -81,6 +81,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async _buildCharacterActions() {
             this._buildEquipmentCategory();
+            this._buildSkillCategory();
         }
 
         /**
@@ -149,10 +150,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             // Exit early if no items exist
             if (this.items.size === 0) return;
 
-            // item types that we want to add to the list of actions
+            // Filter equipment item types to only those that are relevant
             const equipmentTypes = ['weapon', 'shield', 'consumable'];
-
-            // filter the items to get only those in itemTypes
             const equipmentItems = new Map([...this.items].filter(item => equipmentTypes.includes(item[1].type)));
 
             // Create the Map for the equipment
@@ -163,37 +162,14 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
                 const equipmentType = value.type;
 
+                // Add equipment to a map if appropriate
                 if (!equipmentMap.has(equipmentType)) {
                     equipmentMap.set(equipmentType, new Map());
                 }
                 equipmentMap.get(equipmentType).set(key, value);
-
-                /*
-                switch (equipmentType) {
-                    case 'weapon':
-                        if (!equipmentMap.has('weapons')) {
-                            equipmentMap.set('weapons', new Map());
-                        }
-                        equipmentMap.get('weapons').set(key, value);
-                        break;
-                    case 'shield':
-                        if (!equipmentMap.has('shields')) {
-                            equipmentMap.set('shields', new Map());
-                        }
-                        equipmentMap.get('shields').set(key, value);
-                        break;
-                    case 'consumable':
-                        if (!equipmentMap.has('consumables')) {
-                            equipmentMap.set('consumables', new Map());
-                        }
-                        equipmentMap.get('consumables').set(key, value);
-                        break;
-                }
-                */
             }
-            console.log(equipmentMap);
 
-            // Loop through inventory subcategory ids
+            // Loop through inventory subcategory ids and add appropriate actions to each
             for (const [key, value] of equipmentMap) {
 
                 // get the category
@@ -208,8 +184,22 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 // Build actions
                 this._addActions(equipment, groupData, actionType);
             }
+        }
 
-            // console.log(this);
+        /**
+         * Build Skills
+         */
+        _buildSkillCategory() {
+            const actionType = 'skill';
+
+            const trainedSkills = new Map(Object.entries(this.actor.system.skills).filter(skill => {
+                return skill[1].ranks;
+            }));
+            const untrainedSkills = new Map(Object.entries(this.actor.system.skills).filter(skill => {
+                return (!skill[1].ranks && !skill[1].isTrainedOnly);
+            }));
+
+            console.log(trainedSkills, untrainedSkills);
 
         }
 
@@ -230,8 +220,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             if (!groupId) return;
 
             // Get actions
-            const actions = [...items].map(item => this._getAction(actionType, item[1], spellLevel))
-            console.log(actions);
+            const actions = [...items].map(item => this._getAction(actionType, item[1], spellLevel));
 
             // Add actions to action list
             await this.addActions(actions, groupData);
