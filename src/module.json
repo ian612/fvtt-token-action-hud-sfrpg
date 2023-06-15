@@ -12,8 +12,8 @@
   "flags": {},
   "version": "0.1",
   "compatibility": {
-    "minimum": "10",
-    "verified": "11.299"
+    "minimum": "11",
+    "verified": "11.301"
   },
   "esmodules": [
     "./token-action-hud-sfrpg.js"
@@ -38,8 +38,8 @@
         "type": "system",
         "compatibility": [
           {
-            "minimum": "0.23.0",
-            "verified": "0.24.0"
+            "minimum": "0.24.0",
+            "verified": "0.25.0"
           }
         ]
       }
