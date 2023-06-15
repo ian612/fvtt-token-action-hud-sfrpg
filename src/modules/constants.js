@@ -77,36 +77,11 @@ export const SKILL_ABBREVIATION = {
     thievery: 'thi'
 }
 
-/**
- * Strike icons
- */
-export const STRIKE_ICON = {
-    melee: `<img class="alt-usage-icon" src="systems/pf2e/icons/mdi/sword.svg" title="Melee Usage" style="
-            border: 0;
-            filter: invert(1) drop-shadow(1px 1px 1px rgba(0, 0, 0, 1));
-            left: 2px;
-            padding-top: 3px;
-            position: relative;
-            ">`,
-    thrown: `<img class="alt-usage-icon" src="systems/pf2e/icons/mdi/thrown.svg" title="Thrown Usage" style="
-            border: 0;
-            filter: invert(1) drop-shadow(1px 1px 1px rgba(0, 0, 0, 1));
-            left: 2px;
-            padding-top: 3px;
-            position: relative;
-            ">`
-}
-
-export const STRIKE_USAGE = {
-    melee: { name: 'PF2E.WeaponRangeMelee' },
-    ranged: { name: 'PF2E.NPCAttackRanged' },
-    thrown: { name: 'PF2E.TraitThrown' }
-}
-
 // All the potential types of actions go here
 export const GROUP = {
-    weapons: { id: 'weapons', name: 'Weapons', type: 'system' },
+    consumable: { id: 'consumable', name: 'Consumables', type: 'system' },
     equipment: { id: 'equipment', name: 'Equipment', type: 'system' },
-    consumables: { id: 'consumables', name: 'Consumables', type: 'system' },
-    token: { id: 'token', name: 'tokenActionHud.token', type: 'system' }
+    shield: { id: 'shield', name: 'Shields', type: 'system' },
+    token: { id: 'token', name: 'tokenActionHud.token', type: 'system' },
+    weapon: { id: 'weapon', name: 'Weapons', type: 'system' }
 }

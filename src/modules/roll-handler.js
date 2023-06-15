@@ -5,11 +5,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         BLIND_ROLL_MODE = 'blindRoll'
 
         /**
-     * Handle Action Event
-     * @override
-     * @param {object} event
-     * @param {string} encodedValue
-     */
+        * Handle Action Event
+        * @override
+        * @param {object} event
+        * @param {string} encodedValue
+        */
         async doHandleActionEvent (event, encodedValue) {
             const payload = encodedValue.split('|')
 
@@ -48,12 +48,12 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             }
         }
 
-    /**
-    * Roll Equipment
-    * @private
-    * @param {object} actor    The actor
-    * @param {string} actionId The action id
-    */
+        /**
+        * Roll Equipment
+        * @private
+        * @param {object} actor    The actor
+        * @param {string} actionId The action id
+        */
         _rollEquipment (actor, actionId) {
             const equipment = actor.items.get(actionId)
             console.log(equipment);
@@ -61,15 +61,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             equipment.roll()
         }
 
+
         /**
-     * Handle Macros
-     * @private
-     * @param {object} event
-     * @param {string} actionType
-     * @param {object} actor
-     * @param {object} token
-     * @param {string} actionId
-     */
+         * Above is Ian's code
+         * Below is pf2e code left as an example
+         */
+
+        /**
+         * Handle Macros
+         * @private
+         * @param {object} event
+         * @param {string} actionType
+         * @param {object} actor
+         * @param {object} token
+         * @param {string} actionId
+         */
         async _handleMacros (event, actionType, actor, token, actionId) {
             let actorType
             if (actor) actorType = actor.type
@@ -145,14 +151,14 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Handle Unique Character Actions
-     * @private
-     * @param {object} event      The event
-     * @param {string} actionType The action type
-     * @param {object} actor      The actor
-     * @param {object} token      The token
-     * @param {string} actionId   The action id
-     */
+         * Handle Unique Character Actions
+         * @private
+         * @param {object} event      The event
+         * @param {string} actionType The action type
+         * @param {object} actor      The actor
+         * @param {object} token      The token
+         * @param {string} actionId   The action id
+         */
         async _handleUniqueActionsChar (event, actionType, actor, token, actionId) {
             switch (actionType) {
             case 'save':
@@ -184,11 +190,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Handle Unique NPC Actions
-     * @param {object} event      The event
-     * @param {string} actionType The action type
-     * @param {string} actionId   The action id
-     */
+         * Handle Unique NPC Actions
+         * @param {object} event      The event
+         * @param {string} actionType The action type
+         * @param {string} actionId   The action id
+         */
         async _handleUniqueActionsNpc (event, actionType, actor, token, actionId) {
             switch (actionType) {
             case 'initiative':
@@ -208,35 +214,35 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Roll Skill
-     * @private
-     * @param {object} event    The event
-     * @param {object} actor    The actor
-     * @param {string} actionId The action ID
-     */
+         * Roll Skill
+         * @private
+         * @param {object} event    The event
+         * @param {object} actor    The actor
+         * @param {string} actionId The action ID
+         */
         async _rollSkill (event, actor, actionId) {
             const skill = actor.skills[actionId]
             await skill.check.roll({ event })
         }
 
         /**
-     * Roll Ability
-     * @private
-     * @param {object} event    The event
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     */
+         * Roll Ability
+         * @private
+         * @param {object} event    The event
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         */
         _rollAbility (event, actor, actionId) {
             actor.rollAbility(event, actionId)
         }
 
         /**
-     * Roll Character Attribute
-     * @private
-     * @param {object} event    The event
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     */
+         * Roll Character Attribute
+         * @private
+         * @param {object} event    The event
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         */
         _rollAttributeChar (event, actor, actionId) {
             const attribute = actor.system.attributes[actionId]
             if (!attribute) {
@@ -248,22 +254,22 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Roll NPC Attribute
-     * @private
-     * @param {object} event    The event
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     */
+         * Roll NPC Attribute
+         * @private
+         * @param {object} event    The event
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         */
         async _rollAttributeNpc (event, actor, actionId) {
             actor.rollAttribute(event, actionId)
         }
 
         /**
-     * Adjust spell slot
-     * @private
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     */
+         * Adjust spell slot
+         * @private
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         */
         async _adjustSpellSlot (actor, actionId) {
             const actionParts = decodeURIComponent(actionId).split('>')
 
@@ -309,33 +315,33 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Roll Save
-     * @private
-     * @param {object} event    The event
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     */
+         * Roll Save
+         * @private
+         * @param {object} event    The event
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         */
         _rollSave (event, actor, actionId) {
             actor.saves[actionId].check.roll({ event })
         }
 
         /**
-     * Update Roll Mode
-     * @private
-     * @param {string} rollMode The roll mode
-     */
+         * Update Roll Mode
+         * @private
+         * @param {string} rollMode The roll mode
+         */
         async _updateRollMode (rollMode) {
             await game.settings.set('core', 'rollMode', rollMode)
         }
 
         /**
-     * Roll Character Strike
-     * @private
-     * @param {object} event    The event
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     * @returns
-     */
+         * Roll Character Strike
+         * @private
+         * @param {object} event    The event
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         * @returns
+         */
         _rollStrikeChar (event, actor, actionId) {
             const actionParts = decodeURIComponent(actionId).split('>')
 
@@ -384,12 +390,12 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Perform Auxiliary Action
-     * @private
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     * @returns
-     */
+         * Perform Auxiliary Action
+         * @private
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         * @returns
+         */
         _performAuxAction (actor, actionId) {
             const actionParts = decodeURIComponent(actionId).split('>')
 
@@ -414,13 +420,13 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Roll NPC Strike
-     * @private
-     * @param {object} event    The event
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     * @returns
-     */
+         * Roll NPC Strike
+         * @private
+         * @param {object} event    The event
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         * @returns
+         */
         _rollStrikeNpc (event, actor, actionId) {
             const actionParts = decodeURIComponent(actionId).split('>')
 
@@ -467,11 +473,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Roll Item
-     * @private
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     */
+         * Roll Item
+         * @private
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         */
         _rollItem (actor, actionId) {
             const item = actor.items.get(actionId)
 
@@ -479,23 +485,23 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Roll Familiar Attack
-     * @private
-     * @param {object} event The event
-     * @param {object} actor The actor
-     */
+         * Roll Familiar Attack
+         * @private
+         * @param {object} event The event
+         * @param {object} actor The actor
+         */
         _rollFamiliarAttack (event, actor) {
             const options = actor.getRollOptions(['all', 'attack'])
             actor.system.attack.roll(event, options)
         }
 
         /**
-     * Roll Spell
-     * @private
-     * @param {object} actor The actor
-     * @param {string} actionId The action id
-     * @returns
-     */
+         * Roll Spell
+         * @private
+         * @param {object} actor The actor
+         * @param {string} actionId The action id
+         * @returns
+         */
         async _rollSpell (actor, actionId) {
             const actionParts = decodeURIComponent(actionId).split('>')
             const [spellbookId, level, spellId, expend] = actionParts
@@ -516,11 +522,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Perform Utility Macro
-     * @private
-     * @param {object} token    The token
-     * @param {string} actionId The action id
-     */
+         * Perform Utility Macro
+         * @private
+         * @param {object} token    The token
+         * @param {string} actionId The action id
+         */
         async _performUtilityMacro (token, actionId) {
             switch (actionId) {
             case 'treatWounds':
@@ -539,22 +545,22 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Execute Macro by ID
-     * @private
-     * @param {string} id The macro ID
-     */
+         * Execute Macro by ID
+         * @private
+         * @param {string} id The macro ID
+         */
         async _executeMacroById (id) {
             const pack = game.packs.get('pf2e.pf2e-macros')
             pack.getDocument(id).then((e) => e.execute())
         }
 
         /**
-     * Adjust Resources
-     * @private
-     * @param {string} property  The property
-     * @param {string} valueName The value name
-     * @param {object} actor     The actor
-     */
+         * Adjust Resources
+         * @private
+         * @param {string} property  The property
+         * @param {string} valueName The value name
+         * @param {object} actor     The actor
+         */
         async _adjustResources (property, valueName, actor) {
             let value = actor.system.resources[property][valueName]
             const max = actor.system.resources[property].max
@@ -586,11 +592,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Adjust effect
-     * @private
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     */
+         * Adjust effect
+         * @private
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         */
         async _adjustEffect (actor, actionId) {
             const item = coreModule.api.Utils.getItem(actor, actionId)
 
@@ -601,11 +607,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-     * Perform Toggle Macro
-     * @private
-     * @param {object} actor    The actor
-     * @param {string} actionId The action id
-     */
+         * Perform Toggle Macro
+         * @private
+         * @param {object} actor    The actor
+         * @param {string} actionId The action id
+         */
         async _performToggleMacro (actor, actionId) {
             const toggle = JSON.parse(actionId)
             if (!(toggle.domain && toggle.option)) return

@@ -150,7 +150,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             if (this.items.size === 0) return;
 
             // item types that we want to add to the list of actions
-            const equipmentTypes = ['weapon', 'consumable'];
+            const equipmentTypes = ['weapon', 'shield', 'consumable'];
 
             // filter the items to get only those in itemTypes
             const equipmentItems = new Map([...this.items].filter(item => equipmentTypes.includes(item[1].type)));
@@ -161,42 +161,80 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             // Build a sub-map for each type of equipment
             for (const [key, value] of equipmentItems) {
 
-                const equipmentType = value.type
+                const equipmentType = value.type;
 
+                if (!equipmentMap.has(equipmentType)) {
+                    equipmentMap.set(equipmentType, new Map());
+                }
+                equipmentMap.get(equipmentType).set(key, value);
+
+                /*
                 switch (equipmentType) {
                     case 'weapon':
                         if (!equipmentMap.has('weapons')) {
-                            equipmentMap.set('weapons', new Map())
+                            equipmentMap.set('weapons', new Map());
                         }
-                        equipmentMap.get('weapons').set(key, value)
+                        equipmentMap.get('weapons').set(key, value);
+                        break;
+                    case 'shield':
+                        if (!equipmentMap.has('shields')) {
+                            equipmentMap.set('shields', new Map());
+                        }
+                        equipmentMap.get('shields').set(key, value);
                         break;
                     case 'consumable':
                         if (!equipmentMap.has('consumables')) {
-                            equipmentMap.set('consumables', new Map())
+                            equipmentMap.set('consumables', new Map());
                         }
-                        equipmentMap.get('consumables').set(key, value)
+                        equipmentMap.get('consumables').set(key, value);
                         break;
                 }
+                */
             }
+            console.log(equipmentMap);
 
-            // Loop through inventory subcateogry ids
+            // Loop through inventory subcategory ids
             for (const [key, value] of equipmentMap) {
 
                 // get the category
-                const groupId = key
+                const groupId = key;
 
                 // list of stuff in the category
-                const equipment = value
+                const equipment = value;
 
                 // Create group data
-                const groupData = { id: groupId, type: 'system' }
+                const groupData = { id: groupId, type: 'system' };
 
                 // Build actions
-                this._addActions(equipment, groupData, actionType)
+                this._addActions(equipment, groupData, actionType);
             }
 
             // console.log(this);
 
+        }
+
+        /**
+         * Build actions
+         * @private
+         * @param {object} items
+         * @param {object} groupData
+         * @param {string} actionType
+         */
+        async _addActions (items, groupData, actionType = 'item', spellLevel = null) {
+            // console.log(items, groupData, actionType, spellLevel)
+            // Exit if there are no items
+            if (items.size === 0) return;
+
+            // Exit if there is no groupId
+            const groupId = (typeof groupData === 'string' ? groupData : groupData?.id);
+            if (!groupId) return;
+
+            // Get actions
+            const actions = [...items].map(item => this._getAction(actionType, item[1], spellLevel))
+            console.log(actions);
+
+            // Add actions to action list
+            await this.addActions(actions, groupData);
         }
 
         /**
@@ -297,30 +335,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     this._addActions(contentsMap, groupData)
                 }
             }
-        }
-
-        /**
-         * Build actions
-         * @private
-         * @param {object} items
-         * @param {object} groupData
-         * @param {string} actionType
-         */
-        async _addActions (items, groupData, actionType = 'item', spellLevel = null) {
-            // console.log(items, groupData, actionType, spellLevel)
-            // Exit if there are no items
-            if (items.size === 0) return
-
-            // Exit if there is no groupId
-            const groupId = (typeof groupData === 'string' ? groupData : groupData?.id)
-            if (!groupId) return
-
-            // Get actions
-            const actions = [...items].map(item => this._getAction(actionType, item[1], spellLevel))
-            console.log(actions);
-
-            // Add actions to action list
-            await this.addActions(actions, groupData)
         }
 
         /**
