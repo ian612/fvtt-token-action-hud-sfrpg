@@ -87,5 +87,7 @@ export const GROUP = {
     equipment: { id: 'equipment', name: 'Equipment', type: 'system' },
     shield: { id: 'shield', name: 'Shields', type: 'system' },
     token: { id: 'token', name: 'tokenActionHud.token', type: 'system' },
+    trained: { id: 'trained', name: 'Trained Skills', type: 'system' },
+    untrained: { id: 'untrained', name: 'Untrained Skills', type: 'system' },
     weapon: { id: 'weapon', name: 'Weapons', type: 'system' }
 }

@@ -56,9 +56,18 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         */
         _rollEquipment (actor, actionId) {
             const equipment = actor.items.get(actionId)
-            console.log(equipment);
-
             equipment.roll()
+        }
+
+        /**
+        * Roll Skill
+        * @private
+        * @param {object} actor    The actor
+        * @param {string} actionId The action id
+        */
+        async _rollSkill (actor, actionId) {
+            console.log(actor, actionId);
+            actor.rollSkill(actionId, { event: event });
         }
 
 
@@ -136,7 +145,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 await this._rollSpell(actor, actionId)
                 break
             case 'skill':
-                await this._rollSkill(event, actor, actionId)
+                await this._rollSkill(actor, actionId)
                 break
             case 'strike':
                 this._rollStrikeChar(event, actor, actionId)
@@ -211,18 +220,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 this._rollStrikeNpc(event, actor, actionId)
                 break
             }
-        }
-
-        /**
-         * Roll Skill
-         * @private
-         * @param {object} event    The event
-         * @param {object} actor    The actor
-         * @param {string} actionId The action ID
-         */
-        async _rollSkill (event, actor, actionId) {
-            const skill = actor.skills[actionId]
-            await skill.check.roll({ event })
         }
 
         /**

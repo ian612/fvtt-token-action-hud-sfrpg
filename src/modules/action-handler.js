@@ -89,6 +89,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @private
          */
         async _buildDroneActions() {
+            this._buildEquipmentCategory();
             
         }
 
@@ -105,6 +106,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @private
          */
         async _buildNpc2Actions() {
+            this._buildEquipmentCategory();
             
         }
 
@@ -129,6 +131,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @private
          */
         async _buildNpcActions() {
+            this._buildEquipmentCategory();
             
         }
 
@@ -175,7 +178,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 // get the category
                 const groupId = key;
 
-                // list of stuff in the category
+                // Map of all stuff in the category
                 const equipment = value;
 
                 // Create group data
@@ -199,7 +202,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 return (!skill[1].ranks && !skill[1].isTrainedOnly);
             }));
 
-            console.log(trainedSkills, untrainedSkills);
+            this._addActions(trainedSkills, { id: 'trained', type: 'system' }, actionType);
+            this._addActions(untrainedSkills, { id: 'untrained', type: 'system' }, actionType);
 
         }
 
@@ -210,7 +214,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {object} groupData
          * @param {string} actionType
          */
-        async _addActions (items, groupData, actionType = 'item', spellLevel = null) {
+        async _addActions (items, groupData, actionType, spellLevel = null) {
             // console.log(items, groupData, actionType, spellLevel)
             // Exit if there are no items
             if (items.size === 0) return;
@@ -337,7 +341,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @returns {object}
          */
         _getAction (actionType, entity, spellLevel) {
-            // console.log(actionType, entity, spellLevel)
+            console.log(actionType, entity, spellLevel)
             
             // get the id from id or _id, include the spell level if it's a spell
             const id = (actionType === 'spell') ? `${entity.id ?? entity._id}-${spellLevel}` : entity.id ?? entity._id
