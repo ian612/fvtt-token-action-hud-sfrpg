@@ -1,5 +1,5 @@
 // System Module Imports
-import { ACTION_ICON, ACTION_TYPE } from './constants.js'
+import { ACTION_TYPE } from './constants.js'
 import { Utils } from './utils.js'
 
 export let ActionHandler = null
@@ -231,106 +231,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-         * Build inventory
-         * @private
-         */
-        async _buildInventory () {
-        // Exit early if no items exist
-            if (this.items.size === 0) return
-
-            const inventoryMap = new Map()
-
-            for (const [key, value] of this.items) {
-            // Set variables
-                const hasQuantity = value.system?.quantity > 0
-                const isEquippedItem = this._isEquippedItem(value)
-                const type = value.type
-
-                // Set items into maps
-                if (hasQuantity) {
-                    if (isEquippedItem) {
-                        if (!inventoryMap.has('equipped')) inventoryMap.set('equipped', new Map())
-                        inventoryMap.get('equipped').set(key, value)
-                    }
-                    if (!isEquippedItem) {
-                        if (!inventoryMap.has('unequipped')) inventoryMap.set('unequipped', new Map())
-                        inventoryMap.get('unequipped').set(key, value)
-                    }
-                    if (isEquippedItem) {
-                        if (type === 'armor' && this.actorType === 'character') {
-                            if (!inventoryMap.has('armors')) inventoryMap.set('armors', new Map())
-                            inventoryMap.get('armors').set(key, value)
-                        }
-                        if (type === 'consumable') {
-                            if (!inventoryMap.has('consumables')) inventoryMap.set('consumables', new Map())
-                            inventoryMap.get('consumables').set(key, value)
-                        }
-                        if (type === 'backpack') {
-                            if (!inventoryMap.has('containers')) inventoryMap.set('containers', new Map())
-                            inventoryMap.get('containers').set(key, value)
-                        }
-                        if (type === 'equipment') {
-                            if (!inventoryMap.has('equipment')) inventoryMap.set('equipment', new Map())
-                            inventoryMap.get('equipment').set(key, value)
-                        }
-                        if (type === 'treasure') {
-                            if (!inventoryMap.has('treasure')) inventoryMap.set('treasure', new Map())
-                            inventoryMap.get('treasure').set(key, value)
-                        }
-                        if (type === 'weapon') {
-                            if (!inventoryMap.has('weapons')) inventoryMap.set('weapons', new Map())
-                            inventoryMap.get('weapons').set(key, value)
-                        }
-                    }
-                }
-            }
-
-            // Loop through inventory group ids
-            for (const [key, value] of inventoryMap) {
-                const groupId = key
-                const inventory = value
-
-                // Create group data
-                const groupData = { id: groupId, type: 'system' }
-
-                // Build actions
-                this._addActions(inventory, groupData)
-            }
-
-            // Add container contents
-            if (inventoryMap.has('containers')) {
-                // Create parent group data
-                const parentGroupData = { id: 'containers', type: 'system' }
-
-                const containers = inventoryMap.get('containers')
-
-                for (const [key, value] of containers) {
-                    const container = value
-                    const contents = container.contents
-
-                    // Skip if container has no contents
-                    if (!contents.size) continue
-
-                    // Create group data
-                    const groupData = {
-                        id: key,
-                        name: container.name,
-                        listName: `Group: ${container.name}`,
-                        type: 'system-derived'
-                    }
-
-                    // Add group to action list
-                    await this.addGroup(groupData, parentGroupData)
-
-                    const contentsMap = new Map(contents.map(content => [content.id, content]))
-
-                    // Add actions to action list
-                    this._addActions(contentsMap, groupData)
-                }
-            }
-        }
-
-        /**
          * Get Action
          * 
          * This takes the items that have been identified as needing to be added to the token action HUD and
@@ -341,37 +241,26 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @returns {object}
          */
         _getAction (actionType, entity, spellLevel) {
-            console.log(actionType, entity, spellLevel)
+            console.log(actionType, entity, spellLevel);
+
+            const info = this._getItemInfo(entity);
             
             // get the id from id or _id, include the spell level if it's a spell
-            const id = (actionType === 'spell') ? `${entity.id ?? entity._id}-${spellLevel}` : entity.id ?? entity._id
+            const id = entity.id ?? entity._id;
             
             // get the entity's name
-            const name = entity?.name ?? entity?.label
-            const actionTypeName = `${coreModule.api.Utils.i18n(ACTION_TYPE[actionType])}: ` ?? ''
-            const listName = entity.listName ?? `${actionTypeName}${name}`
-            let cssClass = ''
-            if (Object.hasOwn(entity, 'disabled')) {
-                const active = (!entity.disabled) ? ' active' : ''
-                cssClass = `toggle${active}`
-            }
-            const spellcastingId = entity?.spellcasting?.id
-            const encodedId = (actionType === 'spell') ? `${spellcastingId}>${spellLevel}>${entity.id ?? entity._id}` : id
-            const encodedValue = [actionType, encodedId].join(this.delimiter)
-            const actions = entity.system?.actions
-            const actionTypes = ['free', 'reaction', 'passive']
-            const actionTypeValue = entity.system?.actionType?.value
-            const actionsCost = (actions) ? parseInt((actions || {}).value, 10) : null
-            const timeValue = entity.system?.time?.value
-            const actionIcon = entity.actionIcon
-            const iconType = (actionType === 'spell') ? timeValue : (actionTypes.includes(actionTypeValue)) ? actionTypeValue : actionsCost ?? actionIcon
-            const icon1 = this._getActionIcon(iconType)
-            const img = coreModule.api.Utils.getImage(entity)
-            const info = (actionType === 'spell') ? this._getSpellInfo(entity) : this._getItemInfo(entity)
-            const info1 = info?.info1
-            const info2 = info?.info2
-            const info3 = info?.info3
-            const systemSelected = entity?.systemSelected ?? null
+            const name = entity?.name ?? entity?.label;
+            const actionTypeName = `${coreModule.api.Utils.i18n(ACTION_TYPE[actionType])}: ` ?? '';
+            
+            const encodedValue = [actionType, id].join(this.delimiter);
+            const cssClass = '';
+            const img = coreModule.api.Utils.getImage(entity);
+            const icon1 = '';
+            const info1 = info?.info1;
+            const info2 = info?.info2;
+            const info3 = info?.info3;
+            const listName = entity.listName ?? `${actionTypeName}${name}`;
+            const systemSelected = entity?.systemSelected ?? null;
 
             // console.log([id, name, encodedValue, cssClass, img, icon1, info1, info2, info3, listName, systemSelected])
             return {
@@ -450,21 +339,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-         * Is equipped item
-         * @private
-         * @param {object} item
-         * @returns {boolean}
-         */
-        _isEquippedItem (item) {
-            const carryTypes = ['held', 'worn']
-            const carryType = item.system.equipped?.carryType
-
-            if (this.showUnequippedItems) return true
-            if (carryTypes.includes(carryType) && !item.system.containerId?.value?.length) return true
-            return false
-        }
-
-        /**
          * Get item info
          * @private
          * @param {object} item
@@ -484,17 +358,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @returns {string}
          */
         _getQuantityData (item) {
-            const quantity = item?.system?.quantity?.value
+            const quantity = item?.system?.quantity
             return (quantity > 1) ? quantity : ''
-        }
-
-        /**
-         * Get action icon
-         * @param {object} action
-         * @returns {string}
-         */
-        _getActionIcon (action) {
-            return ACTION_ICON[action]
         }
 
         /** @protected */
