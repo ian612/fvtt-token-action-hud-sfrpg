@@ -65,7 +65,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             case 'action':
             case 'feat':
             case 'equipment':
-                this._rollEquipment(actor, actionId)
+                this._rollEquipment(event, actor, actionId)
                 break
             case 'save':
                 this._rollSave(actor, actionId)
@@ -74,7 +74,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 await this._rollSpell(actor, actionId)
                 break
             case 'skill':
-                await this._rollSkill(actor, actionId)
+                await this._rollSkill(event, actor, actionId)
                 break
             case 'utility':
                 this._performUtilityMacro(token, actionId)
@@ -88,9 +88,16 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         * @param {object} actor    The actor
         * @param {string} actionId The action id
         */
-        _rollEquipment (actor, actionId) {
+        _rollEquipment (event, actor, actionId) {
             const equipment = actor.items.get(actionId)
-            equipment.roll()
+            console.log(event, actor, actionId)
+            if (event.ctrlKey) {
+                equipment.rollAttack();
+            } else if (event.altKey) {
+                equipment.rollDamage();
+            } else {
+                equipment.roll();
+            }
         }
 
         /**
@@ -99,7 +106,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         * @param {object} actor    The actor
         * @param {string} actionId The action id
         */
-        async _rollSkill (actor, actionId) {
+        async _rollSkill (event, actor, actionId) {
             actor.rollSkill(actionId, { event: event });
         }
 
