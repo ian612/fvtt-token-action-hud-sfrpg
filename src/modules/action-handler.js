@@ -235,7 +235,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
             // Get actions
             const actions = [...items].map(item => this._getAction(actionType, item[1]));
-            console.log(actions);
 
             // Add actions to action list
             await this.addActions(actions, groupData);
