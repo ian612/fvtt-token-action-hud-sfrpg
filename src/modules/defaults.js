@@ -6,8 +6,7 @@ import { GROUP } from './constants.js'
 export let DEFAULTS = null
 
 Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
-    const groups = GROUP
-    console.log(groups);
+    const groups = GROUP;
     Object.values(groups).forEach(group => {
         group.name = coreModule.api.Utils.i18n(group.name)
         group.listName = `Group: ${coreModule.api.Utils.i18n(group.name)}`

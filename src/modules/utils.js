@@ -20,7 +20,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             return value
         }
 
-        /**
+    /**
      * Set setting value
      * @param {string} key The key
      * @param {string} value The value

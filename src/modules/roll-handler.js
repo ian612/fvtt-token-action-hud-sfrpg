@@ -18,6 +18,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
             const actionType = payload[0]
             const actionId = payload[1]
+            console.log(actionId)
 
             const renderable = ['equipment', 'feat', 'action', 'lore', 'ammo']
             if (renderable.includes(actionType) && this.isRenderItem()) {

@@ -22,8 +22,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async buildSystemActions(groupIds) {
         // Set actor and token variables
-            this.actors = (!this.actor) ? this._getActors() : [this.actor]
-            this.actorType = this.actor?.type
+            this.actors = (!this.actor) ? this._getActors() : [this.actor];
+            this.actorType = this.actor?.type;
 
             // Exit if actor is not required type
             const knownActors = [
@@ -107,7 +107,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async _buildNpc2Actions() {
             this._buildEquipmentCategory();
-            
+            this._buildSkillCategory();
         }
 
         /**
@@ -198,13 +198,23 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const trainedSkills = new Map(Object.entries(this.actor.system.skills).filter(skill => {
                 return skill[1].ranks;
             }));
+
             const untrainedSkills = new Map(Object.entries(this.actor.system.skills).filter(skill => {
                 return (!skill[1].ranks && !skill[1].isTrainedOnly);
             }));
+            
+            for (const skill of trainedSkills) {
+                skill[1].name = game.i18n.localize(CONFIG.SFRPG.skills[skill[0]]);
+                skill[1].id = skill[0];
+            }
+
+            for (const skill of untrainedSkills) {
+                skill[1].name = game.i18n.localize(CONFIG.SFRPG.skills[skill[0]]);
+                skill[1].id = skill[0];
+            }
 
             this._addActions(trainedSkills, { id: 'trained', type: 'system' }, actionType);
             this._addActions(untrainedSkills, { id: 'untrained', type: 'system' }, actionType);
-
         }
 
         /**
@@ -214,8 +224,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {object} groupData
          * @param {string} actionType
          */
-        async _addActions (items, groupData, actionType, spellLevel = null) {
-            // console.log(items, groupData, actionType, spellLevel)
+        async _addActions (items, groupData, actionType) {
+            // console.log(items, groupData, actionType)
             // Exit if there are no items
             if (items.size === 0) return;
 
@@ -224,7 +234,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             if (!groupId) return;
 
             // Get actions
-            const actions = [...items].map(item => this._getAction(actionType, item[1], spellLevel));
+            const actions = [...items].map(item => this._getAction(actionType, item[1]));
+            console.log(actions);
 
             // Add actions to action list
             await this.addActions(actions, groupData);
@@ -240,8 +251,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {object} entity
          * @returns {object}
          */
-        _getAction (actionType, entity, spellLevel) {
-            console.log(actionType, entity, spellLevel);
+        _getAction (actionType, entity) {
 
             const info = this._getItemInfo(entity);
             
