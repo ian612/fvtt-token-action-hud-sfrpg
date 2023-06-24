@@ -81,8 +81,8 @@ function getVersion() {
 
 function zipUp(cb) {
 
-    buildStatic();
-    buildLess();
+    // buildStatic();
+    // buildLess();
 
     const version = getVersion();
 
