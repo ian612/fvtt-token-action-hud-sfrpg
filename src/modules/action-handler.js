@@ -83,6 +83,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             this._buildEquipmentCategory();
             this._buildSkillCategory();
             this._buildSaveCategory();
+            this._buildAbilityCategory();
         }
 
         /**
@@ -92,6 +93,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         async _buildDroneActions() {
             this._buildEquipmentCategory();
             this._buildSkillCategory();
+            this._buildSaveCategory();
+            this._buildAbilityCategory();
         }
 
         /**
@@ -110,6 +113,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             this._buildEquipmentCategory();
             this._buildSkillCategory();
             this._buildSaveCategory();
+            this._buildAbilityCategory();
         }
 
         /**
@@ -136,6 +140,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             this._buildEquipmentCategory();
             this._buildSkillCategory();
             this._buildSaveCategory();
+            this._buildAbilityCategory();
         }
 
         /**
@@ -240,6 +245,22 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
+         * Build Abilities
+         */
+        _buildAbilityCategory() {
+            const actionType = "ability";
+
+            const abilities = new Map(Object.entries(this.actor.system.abilities));
+            
+            for (const [id, ability] of abilities) {
+                ability.id = id;
+                ability.name = game.i18n.localize(CONFIG.SFRPG.abilities[id]);
+            }
+
+            this._addActions(abilities, {id: "ability", type: "system"}, actionType);
+        }
+
+        /**
          * Build actions
          * @private
          * @param {object} items
@@ -258,7 +279,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const actions = [...items].map(item => this._getAction(actionType, item[1]));
 
             // Debug
-            if (actionType === "save" || actionType === "skill") {
+            if (actionType === "save" || actionType === "ability") {
                 console.log(items, groupData, actionType)
                 console.log(actions)
             }
