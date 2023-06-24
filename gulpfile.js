@@ -5,6 +5,7 @@ const fs = require('fs-extra');
 const less = require('gulp-less');
 const path = require('path');
 const sourcemaps = require("gulp-sourcemaps");
+const zip = require('gulp-zip');
 
 function build(cb) {
 
@@ -37,6 +38,10 @@ function watchFiles(cb) {
     watch([
         'src/*.js',
         'src/**/*.js',
+        'src/*.json',
+        'src/**/*.json',
+        'src/**/*.less',
+        'src/**/*.hbs',
         '!node_modules/**'],
         parallel(build));
 }
@@ -53,7 +58,18 @@ function getConfig() {
     }
 }
 
+function zipUp(cb) {
+    const version = 0.1
+
+    src('./dist/**')
+        .pipe(zip(`fvtt-token-action-hud-sfrpg-${version}.zip`))
+        .pipe(dest('./release'));
+
+    cb();
+}
+
 
 exports.build = build;
 exports.clean = clean;
 exports.watch = watchFiles;
+exports.zip = zipUp;

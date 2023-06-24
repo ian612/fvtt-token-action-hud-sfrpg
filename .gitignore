@@ -4,3 +4,6 @@
 
 # Build folder
 dist/
+
+# Release build folder
+release/
