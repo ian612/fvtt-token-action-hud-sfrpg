@@ -306,7 +306,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 }
                 spellMap.get(spellLevel).set(key, value);
             }
-            console.log(spellMap);
 
             // Loop through spell level submaps and add appropriate actions for each
             for (const [key, value] of spellMap) {
@@ -344,10 +343,10 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const actions = [...items].map(item => this._getAction(actionType, item[1]));
 
             // Debug
-            if (actionType === "spell") {
+            /*if (actionType === "spell") {
                 console.log(items, groupData, actionType)
                 console.log(actions)
-            }
+            }*/
 
             // Add actions to action list
             await this.addActions(actions, groupData);

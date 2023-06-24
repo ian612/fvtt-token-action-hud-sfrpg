@@ -108,7 +108,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         * @param {object} actor    The actor
         * @param {string} actionId The action id
         */
-        async _rollSkill (event, actor, actionId) {
+        _rollSkill (event, actor, actionId) {
             actor.rollSkill(actionId, { event: event });
         }
 
@@ -140,9 +140,9 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {string} actionId The action id
          * @returns
          */
-        async _rollSpell (event, actor, actionId) {
+        _rollSpell (event, actor, actionId) {
             const spell = actor.items.get(actionId)
-            actor.useSpell(spell);
+            actor.useSpell(spell, {configureDialog: !event.shiftKey});
 
             // Hooks.callAll('forceUpdateTokenActionHUD')
         }
