@@ -87,7 +87,7 @@ function zipUp(cb) {
     const version = getVersion();
 
     src('./dist/**')
-        .pipe(zip(`fvtt-token-action-hud-sfrpg-${version}.zip`))
+        .pipe(zip(`fvtt-token-action-hud-sfrpg-v${version}.zip`))
         .pipe(dest('./release'));
 
     cb();
