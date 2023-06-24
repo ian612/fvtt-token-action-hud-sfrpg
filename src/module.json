@@ -1,0 +1,72 @@
+{
+  "id": "token-action-hud-sfrpg",
+  "title": "Token Action HUD Starfinder",
+  "description": "Token Action HUD is a repositionable HUD of actions for a selected token",
+  "authors": [
+    {
+      "name": "Ian Bennett",
+      "url": "https://github.com/ian612"
+    }
+  ],
+  "url": "https://github.com/ian612/fvtt-token-action-hud-sfrpg",
+  "flags": {},
+  "version": "0.1",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11.302"
+  },
+  "esmodules": [
+    "./token-action-hud-sfrpg.js"
+  ],
+  "scripts": [
+  ],
+  "styles": [
+    "./token-action-hud-sfrpg.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [],
+  "relationships": {
+    "systems": [
+      {
+        "id": "sfrpg",
+        "type": "system",
+        "compatibility": [
+          {
+            "minimum": "0.24.0",
+            "verified": "0.25.0"
+          }
+        ]
+      }
+    ],
+    "requires": [
+      {
+        "id": "token-action-hud-core",
+        "type": "module",
+        "compatibility": [
+          {
+            "minimum": "1.4.0",
+            "maximum": "1.4",
+            "verified": "1.4.9"
+          }
+        ]
+      }
+    ],
+    "optional": [],
+    "flags": {
+      "optional": []
+    }
+  },
+  "socket": false,
+  "manifest": "https://raw.githubusercontent.com/ian612/fvtt-token-action-hud-sfrpg/main/module.json",
+  "download": "https://github.com/ian612/fvtt-token-action-hud-sfrpg/releases/download/v0.1/sfrpg-v0.1.zip",
+  "readme": "https://github.com/ian612/fvtt-token-action-hud-sfrpg#readme",
+  "protected": false,
+  "coreTranslation": false,
+  "library": false
+}
