@@ -17,7 +17,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             {
                 nestId: 'equipment',
                 id: 'equipment',
-                name: 'Equipment', // coreModule.api.Utils.i18n('PF2E.TabInventoryLabel'),
+                name: 'Equipment',
                 groups: [
                     { ...groups.weapon, nestId: 'equipment_weapon' },
                     { ...groups.shield, nestId: 'equipment_shield' },
@@ -27,10 +27,26 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             {
                 nestId: 'skill',
                 id: 'skill',
-                name: 'Skills', // coreModule.api.Utils.i18n('PF2E.TabInventoryLabel'),
+                name: 'Skills',
                 groups: [
                     { ...groups.trained, nestId: 'skill_trained' },
                     { ...groups.untrained, nestId: 'skill_untrained' }
+                ]
+            },
+            {
+                nestId: 'ability',
+                id: 'ability',
+                name: 'Abilities',
+                groups: [
+                    { ...groups.ability, nestId: 'ability_ability' }
+                ]
+            },
+            {
+                nestId: 'save',
+                id: 'save',
+                name: 'Saves',
+                groups: [
+                    { ...groups.save, nestId: 'save_save' }
                 ]
             },
             {

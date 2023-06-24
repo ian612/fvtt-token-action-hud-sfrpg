@@ -68,7 +68,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 this._rollEquipment(event, actor, actionId)
                 break
             case 'save':
-                this._rollSave(actor, actionId)
+                this._rollSave(event, actor, actionId)
                 break
             case 'spell':
                 await this._rollSpell(actor, actionId)
@@ -85,6 +85,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         /**
         * Roll Equipment
         * @private
+        * @param {object} event    The event
         * @param {object} actor    The actor
         * @param {string} actionId The action id
         */
@@ -103,6 +104,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         /**
         * Roll Skill
         * @private
+        * @param {object} event    The event
         * @param {object} actor    The actor
         * @param {string} actionId The action id
         */
@@ -118,12 +120,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         /**
          * Roll Ability
          * @private
-         * @param {object} event    The event
          * @param {object} actor    The actor
          * @param {string} actionId The action id
          */
         _rollAbility (event, actor, actionId) {
-            actor.rollAbility(event, actionId)
+            actor.rollAbility(actionId, {event:event});
         }
 
         /**
@@ -134,7 +135,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {string} actionId The action id
          */
         _rollSave (event, actor, actionId) {
-            actor.saves[actionId].check.roll({ event })
+            actor.rollSave(actionId, {event:event});
         }
 
         /**

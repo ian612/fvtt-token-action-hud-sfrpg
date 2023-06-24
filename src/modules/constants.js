@@ -58,8 +58,10 @@ export const SKILL_ABBREVIATION = {
 
 // All the potential types of actions go here
 export const GROUP = {
+    ability: { id: 'ability', name: 'Abilities', type: 'system' },
     consumable: { id: 'consumable', name: 'Consumables', type: 'system' },
     equipment: { id: 'equipment', name: 'Equipment', type: 'system' },
+    save: { id: 'save', name: 'Saves', type: 'system' },
     shield: { id: 'shield', name: 'Shields', type: 'system' },
     token: { id: 'token', name: 'tokenActionHud.token', type: 'system' },
     trained: { id: 'trained', name: 'Trained Skills', type: 'system' },

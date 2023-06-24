@@ -82,6 +82,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         async _buildCharacterActions() {
             this._buildEquipmentCategory();
             this._buildSkillCategory();
+            this._buildSaveCategory();
         }
 
         /**
@@ -90,7 +91,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async _buildDroneActions() {
             this._buildEquipmentCategory();
-            
+            this._buildSkillCategory();
         }
 
         /**
@@ -108,6 +109,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         async _buildNpc2Actions() {
             this._buildEquipmentCategory();
             this._buildSkillCategory();
+            this._buildSaveCategory();
         }
 
         /**
@@ -132,7 +134,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async _buildNpcActions() {
             this._buildEquipmentCategory();
-            
+            this._buildSkillCategory();
+            this._buildSaveCategory();
         }
 
         /**
@@ -204,17 +207,36 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             }));
             
             for (const skill of trainedSkills) {
-                skill[1].name = game.i18n.localize(CONFIG.SFRPG.skills[skill[0]]);
                 skill[1].id = skill[0];
+                skill[1].name = game.i18n.localize(CONFIG.SFRPG.skills[skill[0]]);
             }
 
             for (const skill of untrainedSkills) {
-                skill[1].name = game.i18n.localize(CONFIG.SFRPG.skills[skill[0]]);
                 skill[1].id = skill[0];
+                skill[1].name = game.i18n.localize(CONFIG.SFRPG.skills[skill[0]]);
             }
 
-            this._addActions(trainedSkills, { id: 'trained', type: 'system' }, actionType);
-            this._addActions(untrainedSkills, { id: 'untrained', type: 'system' }, actionType);
+            this._addActions(trainedSkills, { id: "trained", type: "system" }, actionType);
+            this._addActions(untrainedSkills, { id: "untrained", type: "system" }, actionType);
+        }
+
+        /**
+         * Build Saves
+         */
+        _buildSaveCategory() {
+            const actionType = "save";
+
+            const saves = new Map();
+            saves.set('fort', this.actor.system.attributes.fort);
+            saves.set('reflex', this.actor.system.attributes.reflex);
+            saves.set('will', this.actor.system.attributes.will);
+
+            for (const [id, save] of saves) {
+                save.id = id;
+                save.name = game.i18n.localize(CONFIG.SFRPG.saves[id]);
+            }
+
+            this._addActions(saves, {id: "save", type: "system"}, actionType);
         }
 
         /**
@@ -225,16 +247,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {string} actionType
          */
         async _addActions (items, groupData, actionType) {
-            // console.log(items, groupData, actionType)
             // Exit if there are no items
             if (items.size === 0) return;
 
             // Exit if there is no groupId
-            const groupId = (typeof groupData === 'string' ? groupData : groupData?.id);
+            const groupId = groupData?.id;
             if (!groupId) return;
 
             // Get actions
             const actions = [...items].map(item => this._getAction(actionType, item[1]));
+
+            // Debug
+            if (actionType === "save" || actionType === "skill") {
+                console.log(items, groupData, actionType)
+                console.log(actions)
+            }
 
             // Add actions to action list
             await this.addActions(actions, groupData);
