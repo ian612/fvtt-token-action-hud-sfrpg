@@ -20,7 +20,7 @@ Token Action HUD is a repositionable HUD of actions for a selected token.
 ## Method 2
 1. On Foundry VTT's **Configuration and Setup** screen, go to **Add-on Modules**
 2. Click **Install Module**
-3. In the Manifest URL field, paste: `https://github.com/ian612/fvtt-token-action-hud-sfrpg/releases/latest/download/module.json`
+3. In the Manifest URL field, paste: `https://raw.githubusercontent.com/ian612/fvtt-token-action-hud-sfrpg/main/src/module.json`
 4. Click **Install** next to the pasted Manifest URL
 
 ## Required Modules
@@ -32,7 +32,7 @@ Token Action HUD uses either the [Color Picker](https://foundryvtt.com/packages/
 
 # Support
 
-For questions, feature requests or bug reports, please open an issue [here](https://github.com/Larkinabout/fvtt-token-action-hud-sfrpg/issues).
+For questions, feature requests or bug reports, please open an issue [here](https://github.com/ian612/fvtt-token-action-hud-sfrpg/issues).
 
 Pull requests are welcome. Please include a reason for the request or create an issue before starting one.
 
