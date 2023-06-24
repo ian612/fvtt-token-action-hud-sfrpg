@@ -13,7 +13,7 @@
   "version": "0.1",
   "compatibility": {
     "minimum": "11",
-    "verified": "11.301"
+    "verified": "11.302"
   },
   "esmodules": [
     "./token-action-hud-sfrpg.js"
@@ -52,7 +52,7 @@
           {
             "minimum": "1.4.0",
             "maximum": "1.4",
-            "verified": "1.4.6"
+            "verified": "1.4.9"
           }
         ]
       }
@@ -64,7 +64,7 @@
   },
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/ian612/fvtt-token-action-hud-sfrpg/main/module.json",
-  "download": "",
+  "download": "https://github.com/ian612/fvtt-token-action-hud-sfrpg/releases/download/v0.1/sfrpg-v0.1.zip",
   "readme": "https://github.com/ian612/fvtt-token-action-hud-sfrpg#readme",
   "protected": false,
   "coreTranslation": false,
