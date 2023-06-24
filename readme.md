@@ -32,14 +32,13 @@ Token Action HUD uses either the [Color Picker](https://foundryvtt.com/packages/
 
 # Support
 
-For questions, feature requests or bug reports, please open an issue [here](https://github.com/Larkinabout/fvtt-token-action-hud-core/issues).
+For questions, feature requests or bug reports, please open an issue [here](https://github.com/Larkinabout/fvtt-token-action-hud-sfrpg/issues).
 
 Pull requests are welcome. Please include a reason for the request or create an issue before starting one.
 
 # Acknowledgements
 
-First and foremost, thank you to the Community Helpers on Foundry's Discord who provide tireless support for people seeking help with the HUD.
-Enormous thanks also goes to the following people for their help in getting the HUD to its current state: Drental, Kekilla, Rainer, Xacus, Giddy, and anyone who has provided advice to any and all of my problems on Discord, as well as all the other developers who make FoundryVTT a joy to use.
+Thanks to everyone on the Foundry Discord for their assistance, in particular LebombJames for his help with figuring out Starfinder system issues and Russell for assistance with TAH Core.
 
 # License
 
