@@ -11,8 +11,13 @@ const zip = require('gulp-zip');
 const version = 0.1
 
 function build(cb) {
+    buildStatic();
+    buildLess();
+    cb();
+}
 
-    // Copy static files first
+function buildStatic() {
+    // Copy static files
     src([
         'src/lang/*.json',
         'src/templates/**/*.hbs',
@@ -21,15 +26,15 @@ function build(cb) {
         "src/modules/**/*.js"
     ])
         .pipe(dest((file) => file.base.replace("\\src", "\\dist")));
-    
+}
+
+function buildLess() {
     // Build less file(s)
     src('src/less/token-action-hud-sfrpg.less')
         .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(cssClean())
         .pipe(dest('dist'));
-
-    cb();
 }
 
 function clean(cb) {
@@ -67,7 +72,6 @@ function getVersion() {
 
     if (fs.existsSync(manifestPath)) {
         manifest = fs.readJSONSync(manifestPath);
-        console.log(manifest.version);
         return manifest.version;
     } else {
         return;
@@ -76,6 +80,10 @@ function getVersion() {
 
 
 function zipUp(cb) {
+
+    buildStatic();
+    buildLess();
+
     const version = getVersion();
 
     src('./dist/**')
