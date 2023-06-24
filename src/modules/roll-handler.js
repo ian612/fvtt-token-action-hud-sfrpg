@@ -71,7 +71,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 this._rollSave(event, actor, actionId)
                 break
             case 'spell':
-                await this._rollSpell(actor, actionId)
+                await this._rollSpell(event, actor, actionId)
                 break
             case 'skill':
                 await this._rollSkill(event, actor, actionId)
@@ -113,11 +113,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /**
-         * Above is Ian's code
-         * Below is pf2e code left as an example
-         */
-
-        /**
          * Roll Ability
          * @private
          * @param {object} actor    The actor
@@ -145,24 +140,17 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @param {string} actionId The action id
          * @returns
          */
-        async _rollSpell (actor, actionId) {
-            const actionParts = decodeURIComponent(actionId).split('>')
-            const [spellbookId, level, spellId, expend] = actionParts
+        async _rollSpell (event, actor, actionId) {
+            const spell = actor.items.get(actionId)
+            actor.useSpell(spell);
 
-            if (this.isRenderItem()) return this.doRenderItem(actor, spellId)
-
-            const spellcasting = actor.items.get(spellbookId)
-            const spell = actor.items.get(spellId)
-            if (!spellcasting || !spell) return
-
-            await spellcasting.cast(spell, {
-                message: !expend,
-                consume: true,
-                level: Number(level)
-            })
-
-            Hooks.callAll('forceUpdateTokenActionHUD')
+            // Hooks.callAll('forceUpdateTokenActionHUD')
         }
+
+        /**
+         * Above is Ian's code
+         * Below is pf2e code left as an example
+         */
 
         /**
          * Perform Utility Macro

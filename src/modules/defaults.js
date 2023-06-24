@@ -50,6 +50,22 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 ]
             },
             {
+                nestId: 'spell',
+                id: 'spell',
+                name: 'Spells',
+                groups: [
+                    { ...groups.spellalways, nestId: 'spell_spellalways' },
+                    { ...groups.spellinnate, nestId: 'spell_spellinnate' },
+                    { ...groups.spell0, nestId: 'spell_spell0' },
+                    { ...groups.spell1, nestId: 'spell_spell1' },
+                    { ...groups.spell2, nestId: 'spell_spell2' },
+                    { ...groups.spell3, nestId: 'spell_spell3' },
+                    { ...groups.spell4, nestId: 'spell_spell4' },
+                    { ...groups.spell5, nestId: 'spell_spell5' },
+                    { ...groups.spell6, nestId: 'spell_spell6' }
+                ]
+            },
+            {
                 nestId: 'utility',
                 id: 'utility',
                 name: coreModule.api.Utils.i18n('tokenActionHud.utility'),

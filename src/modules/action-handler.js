@@ -84,6 +84,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             this._buildSkillCategory();
             this._buildSaveCategory();
             this._buildAbilityCategory();
+            this._buildSpellCategory();
         }
 
         /**
@@ -114,6 +115,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             this._buildSkillCategory();
             this._buildSaveCategory();
             this._buildAbilityCategory();
+            this._buildSpellCategory();
         }
 
         /**
@@ -141,6 +143,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             this._buildSkillCategory();
             this._buildSaveCategory();
             this._buildAbilityCategory();
+            this._buildSpellCategory();
         }
 
         /**
@@ -231,16 +234,19 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         _buildSaveCategory() {
             const actionType = "save";
 
+            // Build empty map for saves
             const saves = new Map();
             saves.set('fort', this.actor.system.attributes.fort);
             saves.set('reflex', this.actor.system.attributes.reflex);
             saves.set('will', this.actor.system.attributes.will);
 
+            // Add in id's and localized names
             for (const [id, save] of saves) {
                 save.id = id;
                 save.name = game.i18n.localize(CONFIG.SFRPG.saves[id]);
             }
 
+            // Add to the action list
             this._addActions(saves, {id: "save", type: "system"}, actionType);
         }
 
@@ -250,14 +256,73 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         _buildAbilityCategory() {
             const actionType = "ability";
 
+            // Map of abilities
             const abilities = new Map(Object.entries(this.actor.system.abilities));
             
+            // Add in id's and localized names
             for (const [id, ability] of abilities) {
                 ability.id = id;
                 ability.name = game.i18n.localize(CONFIG.SFRPG.abilities[id]);
             }
 
+            // Add to the action list
             this._addActions(abilities, {id: "ability", type: "system"}, actionType);
+        }
+
+        /**
+         * Build Spells
+         */
+        _buildSpellCategory() {
+            const actionType = "spell";
+            // const spellLevels = ["always", "innate", "0", "1", "2", "3", "4", "5", "6"];
+
+            // Exit early if no items exist
+            if (this.items.size === 0) return;
+
+            // Filter items to only get spells
+            const spells = new Map([...this.items].filter(item => item[1].type === "spell"));
+
+            // Exit early if no spells exist
+            if (spells.size === 0) return;
+
+            // Create the Map for the spells
+            const spellMap = new Map();
+
+            // Build a sub-map for each spell level, including innate and always available spells
+            for (const [key, value] of spells) {
+                
+                // set the level to the preparation mode if it has one
+                const prepMode = value.system.preparation.mode
+                let spellLevel = null;
+                if (prepMode) {
+                    spellLevel = prepMode;
+                } else {
+                    spellLevel = value.system.level.toString();
+                }
+
+                // Add equipment to a map if appropriate
+                if (!spellMap.has(spellLevel)) {
+                    spellMap.set(spellLevel, new Map());
+                }
+                spellMap.get(spellLevel).set(key, value);
+            }
+            console.log(spellMap);
+
+            // Loop through spell level submaps and add appropriate actions for each
+            for (const [key, value] of spellMap) {
+
+                // get the category
+                const groupId = "spell".concat(key);
+
+                // Map of all spells in this level
+                const spell = value;
+
+                // Create group data
+                const groupData = { id: groupId, type: 'system' };
+
+                // Build actions
+                this._addActions(spell, groupData, actionType);
+            }
         }
 
         /**
@@ -279,7 +344,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const actions = [...items].map(item => this._getAction(actionType, item[1]));
 
             // Debug
-            if (actionType === "save" || actionType === "ability") {
+            if (actionType === "spell") {
                 console.log(items, groupData, actionType)
                 console.log(actions)
             }
