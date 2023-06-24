@@ -7,6 +7,9 @@ const path = require('path');
 const sourcemaps = require("gulp-sourcemaps");
 const zip = require('gulp-zip');
 
+// This is the version number to build
+const version = 0.1
+
 function build(cb) {
 
     // Copy static files first
@@ -58,8 +61,22 @@ function getConfig() {
     }
 }
 
+function getVersion() {
+    const manifestPath = path.resolve(process.cwd(), './src/module.json');
+    let manifest;
+
+    if (fs.existsSync(manifestPath)) {
+        manifest = fs.readJSONSync(manifestPath);
+        console.log(manifest.version);
+        return manifest.version;
+    } else {
+        return;
+    }
+}
+
+
 function zipUp(cb) {
-    const version = 0.1
+    const version = getVersion();
 
     src('./dist/**')
         .pipe(zip(`fvtt-token-action-hud-sfrpg-${version}.zip`))
@@ -72,4 +89,5 @@ function zipUp(cb) {
 exports.build = build;
 exports.clean = clean;
 exports.watch = watchFiles;
+exports.version = getVersion;
 exports.zip = zipUp;
