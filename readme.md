@@ -11,7 +11,7 @@ Token Action HUD is a repositionable HUD of actions for a selected token.
 
 # Installation
 
-## Method 1
+## Method 1 - NOT YET AVAILABLE, USE METHOD 2
 1. On Foundry VTT's **Configuration and Setup** screen, go to **Add-on Modules**
 2. Click **Install Module**
 3. Search for **Token Action HUD Starfinder** 
