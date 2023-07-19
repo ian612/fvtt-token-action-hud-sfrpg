@@ -81,6 +81,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async _buildCharacterActions() {
             this._buildEquipmentCategory();
+            this._buildFeatureCategory();
             this._buildSkillCategory();
             this._buildSaveCategory();
             this._buildAbilityCategory();
@@ -93,6 +94,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async _buildDroneActions() {
             this._buildEquipmentCategory();
+            this._buildFeatureCategory();
             this._buildSkillCategory();
             this._buildSaveCategory();
             this._buildAbilityCategory();
@@ -112,6 +114,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async _buildNpc2Actions() {
             this._buildEquipmentCategory();
+            this._buildFeatureCategory();
             this._buildSkillCategory();
             this._buildSaveCategory();
             this._buildAbilityCategory();
@@ -140,6 +143,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         async _buildNpcActions() {
             this._buildEquipmentCategory();
+            this._buildFeatureCategory();
             this._buildSkillCategory();
             this._buildSaveCategory();
             this._buildAbilityCategory();
@@ -198,6 +202,28 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 // Build actions
                 this._addActions(equipment, groupData, actionType);
             }
+        }
+
+        /**
+         * Build features with actions
+         */
+        _buildFeatureCategory() {
+            console.log(this);
+            const actionType = 'feature';
+            const features = new Map();
+            
+            for (const [key, item] of this.items) {
+                if (item.type === "feat") {
+                    if (item.hasAttack || item.hasDamage || item.hasSave || item.hasSkill || item.system.activation.type) {
+                        console.log(item);
+                        features.set(key, item);
+                    }
+                }
+            }
+
+            console.log(features);
+            this._addActions(features, { id: "feature", type: "system" }, actionType);
+
         }
 
         /**

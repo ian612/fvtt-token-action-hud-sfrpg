@@ -60,24 +60,25 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
             switch (actionType) {
             case 'ability':
-                this._rollAbility(event, actor, actionId)
+                this._rollAbility(event, actor, actionId);
                 break
-            case 'action':
-            case 'feat':
+            case 'feature':
+                this._rollFeature(event, actor, actionId);
+                break
             case 'equipment':
-                this._rollEquipment(event, actor, actionId)
+                this._rollEquipment(event, actor, actionId);
                 break
             case 'save':
-                this._rollSave(event, actor, actionId)
+                this._rollSave(event, actor, actionId);
                 break
             case 'spell':
-                await this._rollSpell(event, actor, actionId)
+                await this._rollSpell(event, actor, actionId);
                 break
             case 'skill':
-                await this._rollSkill(event, actor, actionId)
+                await this._rollSkill(event, actor, actionId);
                 break
             case 'utility':
-                this._performUtilityMacro(token, actionId)
+                this._performUtilityMacro(token, actionId);
                 break
             }
         }
@@ -100,6 +101,25 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 equipment.roll();
             }
         }
+
+        /**
+        * Roll Feature
+        * @private
+        * @param {object} event    The event
+        * @param {object} actor    The actor
+        * @param {string} actionId The action id
+        */
+       _rollFeature (event, actor, actionId) {
+        const feature = actor.items.get(actionId);
+        console.log(event, actor, actionId)
+        if (event.ctrlKey) {
+            feature.rollAttack();
+        } else if (event.altKey) {
+            feature.rollDamage();
+        } else {
+            feature.roll();
+        }
+       }
 
         /**
         * Roll Skill

@@ -21,13 +21,13 @@ export const REQUIRED_CORE_MODULE_VERSION = '1.4'
  * Action type
  */
 export const ACTION_TYPE = {
-    attribute: 'tokenActionHud.pf2e.attribute',
-    equipment: 'Equipment',
-    feat: 'PF2E.Item.Feat.LevelLabel',
-    save: 'tokenActionHud.pf2e.save',
-    skill: 'PF2E.SkillLabel',
-    spell: 'ITEM.TypeSpell',
-    utility: 'tokenActionHud.utility'
+    attribute: 'tokenActionHud.sfrpg.type.attribute',
+    equipment: 'tokenActionHud.sfrpg.type.equipment',
+    feature: 'tokenActionHud.sfrpg.type.feature',
+    save: 'tokenActionHud.sfrpg.type.save',
+    skill: 'tokenActionHud.sfrpg.type.skill',
+    spell: 'tokenActionHud.sfrpg.type.spell',
+    utility: 'tokenActionHud.sfrpg.type.utility'
 }
 
 /**
@@ -61,6 +61,7 @@ export const GROUP = {
     ability: { id: 'ability', name: 'Abilities', type: 'system' },
     consumable: { id: 'consumable', name: 'Consumables', type: 'system' },
     equipment: { id: 'equipment', name: 'Equipment', type: 'system' },
+    feature: { id: 'feature', name: 'Feature', type: 'system'},
     save: { id: 'save', name: 'Saves', type: 'system' },
     shield: { id: 'shield', name: 'Shields', type: 'system' },
     spellalways: { id: 'spellalways', name: 'Always Available', type: 'system' },
