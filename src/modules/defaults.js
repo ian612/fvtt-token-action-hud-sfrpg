@@ -29,7 +29,12 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 id: 'feature',
                 name: 'Features',
                 groups: [
-                    { ...groups.feature, nestId: "feature_feature"}
+                    { ...groups.feat, nestId: "feature_feat"},
+                    { ...groups.classFeature, nestId: "feature_classFeature"},
+                    { ...groups.speciesFeature, nestId: "feature_speciesFeature"},
+                    { ...groups.archetypeFeature, nestId: "feature_archetypeFeature"},
+                    { ...groups.themeFeature, nestId: "feature_themeFeature"},
+                    { ...groups.universalCreatureRule, nestId: "feature_universalCreatureRule"}
                 ]
             },
             {

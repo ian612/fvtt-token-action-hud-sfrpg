@@ -210,19 +210,48 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         _buildFeatureCategory() {
             console.log(this);
             const actionType = 'feature';
-            const features = new Map();
             
-            for (const [key, item] of this.items) {
-                if (item.type === "feat") {
-                    if (item.hasAttack || item.hasDamage || item.hasSave || item.hasSkill || item.system.activation.type) {
-                        console.log(item);
-                        features.set(key, item);
+            // Filter equipment item types to only those that are relevant
+            const featureTypes = ['feat', 'classFeature', 'speciesFeature', 'archetypeFeature', 'themeFeature', 'universalCreatureRule'];
+            const featureItems = new Map([...this.items].filter(item => featureTypes.includes(item[1].type)));
+
+            // Create a Map for the features to live in
+            const featureMap = new Map();
+            
+            // Build a sub-map for each type of feature
+            for (const [key, value] of featureItems) {
+                if (value.type === "feat") {
+                    if (value.hasAttack || value.hasDamage || value.hasSave || value.hasSkill || value.system.activation.type) {
+
+                        const featureType = value.system.details.category;
+                        console.log(value);
+
+                        // Add feature to a map if appropriate
+                        if (!featureMap.has(featureType)) {
+                            featureMap.set(featureType, new Map());
+                        }
+                        featureMap.get(featureType).set(key, value);
                     }
                 }
             }
 
-            console.log(features);
-            this._addActions(features, { id: "feature", type: "system" }, actionType);
+            console.log(featureMap);
+
+            // Loop through inventory subcategory ids and add appropriate actions to each
+            for (const [key, value] of featureMap) {
+
+                // get the category
+                const groupId = key;
+
+                // Map of all stuff in the category
+                const feature = value;
+
+                // Create group data
+                const groupData = { id: groupId, type: 'system' };
+
+                // Build actions
+                this._addActions(feature, groupData, actionType);
+            }
 
         }
 

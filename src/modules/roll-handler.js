@@ -111,11 +111,17 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         */
        _rollFeature (event, actor, actionId) {
         const feature = actor.items.get(actionId);
-        console.log(event, actor, actionId)
         if (event.ctrlKey) {
             feature.rollAttack();
         } else if (event.altKey) {
             feature.rollDamage();
+        } else if (event.shiftKey) {
+            if (feature.canBeActivated()) {
+                const isActive = feature.isActive();
+                feature.setActive(!isActive);
+            } else {
+                ui.notifications.error('This feature cannot be activated/deactivated.')
+            }
         } else {
             feature.roll();
         }
